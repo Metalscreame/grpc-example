@@ -3,10 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/Metalscreame/gRPC_example/models/chat"
+	"github.com/Metalscreame/gRPC_example/pb"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-
 )
 
 func main() {
@@ -17,9 +16,17 @@ func main() {
 	}
 	defer conn.Close()
 
-	c := chat.NewChatServiceClient(conn)
+	c := pb.NewChatServiceClient(conn)
 
-	response, err := c.SayHello(context.Background(), &chat.Message{Body: "Hello From Client!"})
+	response, err := c.SayHello(context.Background(), &pb.Message{
+		Id:           1,
+		Body:         "Hello From Client!",
+		PhoneNumbers: []string{"111", "222"},
+		PersonInfo: &pb.Person{
+			Name:     "Roman",
+			LastName: "Kosyi",
+		},
+	})
 	if err != nil {
 		log.Fatalf("Error when calling SayHello: %s", err)
 	}

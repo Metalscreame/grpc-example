@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/Metalscreame/gRPC_example/handler"
-	"github.com/Metalscreame/gRPC_example/models/chat"
+	"github.com/Metalscreame/gRPC_example/pb"
 	"google.golang.org/grpc"
 )
 
@@ -19,7 +19,7 @@ func main() {
 
 	chatHandler := handler.Chat{}
 	// registering specific handlers for this server
-	chat.RegisterChatServiceServer(grpcServer, &chatHandler)
+	pb.RegisterChatServiceServer(grpcServer, &chatHandler)
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %s", err)
